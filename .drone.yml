@@ -27,7 +27,7 @@ steps:
       port: 22 # 远程连接端口
       command_timeout: 5m # 远程执行命令超时时间
       script:
-        - cd /root/docker/maven/build # 进入宿主机构建目录
+        - cd /root/opt/module/project/test # 进入宿主机构建目录
         - chmod +x run.sh # 更改为可执行脚本
         - ./run.sh # 运行脚本打包应用镜像并运行
     when:
