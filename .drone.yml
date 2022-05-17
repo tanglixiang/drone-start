@@ -6,9 +6,11 @@ steps:
     image: maven:3.8-openjdk-8
     volumes: # 将容器内目录挂载到宿主机，仓库需要开启Trusted设置
       - name: maven-cache
-        path: /root/.m2 # 将maven下载依赖的目录挂载出来，防止重复下载
+        path: /opt/module/maven # 将maven下载依赖的目录挂载出来，防止重复下载
       - name: maven-build
         path: /app/build # 将应用打包好的Jar和执行脚本挂载出来
+      - name: maven-xml
+        path: /usr/share/maven/conf
     commands: # 定义在Docker容器中执行的shell命令
       - mvn clean package # 应用打包命令
       - cp target/demo-1.0.0.jar /app/build/demo-1.0.0.jar
@@ -39,4 +41,7 @@ volumes: # 定义流水线挂载目录，用于共享数据
   - name: maven-cache
     host:
       path: /opt/module/maven
+  - name: maven-xml
+    host:
+      path: /opt/module/maven/apache-maven-3.8.5/conf
 
