@@ -13,7 +13,7 @@ steps:
         path: /usr/share/maven/conf
     commands: # 定义在Docker容器中执行的shell命令
       - mvn clean package # 应用打包命令
-      - cp target/demo-1.0.0.jar /app/build/demo-1.0.0.jar
+      - cp target/turf-start-1.0-SNAPSHOT.jar /app/build/turf-start-1.0-SNAPSHOT.jar
       - cp Dockerfile /app/build/Dockerfile
       - cp run.sh /app/build/run.sh
 
