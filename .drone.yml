@@ -3,23 +3,20 @@ type: docker
 name: pipeline-example-maven
 
 steps:
-  - name: Maven编译
-    image: maven:3.8-openjdk-8
-    volumes: # 将容器内目录挂载到宿主机，仓库需要开启Trusted设置
-      - name: maven-cache
-        path: /opt/module/maven # 将maven下载依赖的目录挂载出来，防止重复下载
-      - name: maven-build
-        path: /app/build # 将应用打包好的Jar和执行脚本挂载出来
-      - name: maven-xml
-        path: /usr/share/maven/conf
-    commands: # 定义在Docker容器中执行的shell命令
-      - mvn clean package # 应用打包命令
-      - cp target/turf-start-1.0-SNAPSHOT.jar /app/build/turf-start-1.0-SNAPSHOT.jar
-      - cp Dockerfile /app/build/Dockerfile
-      - cp run.sh /app/build/run.sh
-    when:
-      event:
-        - web-status
+#  - name: Maven编译
+#    image: maven:3.8-openjdk-8
+#    volumes: # 将容器内目录挂载到宿主机，仓库需要开启Trusted设置
+#      - name: maven-cache
+#        path: /opt/module/maven # 将maven下载依赖的目录挂载出来，防止重复下载
+#      - name: maven-build
+#        path: /app/build # 将应用打包好的Jar和执行脚本挂载出来
+#      - name: maven-xml
+#        path: /usr/share/maven/conf
+#    commands: # 定义在Docker容器中执行的shell命令
+#      - mvn clean package # 应用打包命令
+#      - cp target/turf-start-1.0-SNAPSHOT.jar /app/build/turf-start-1.0-SNAPSHOT.jar
+#      - cp Dockerfile /app/build/Dockerfile
+#      - cp run.sh /app/build/run.sh
 
   - name: ssh到主机然后打包镜像
     image: appleboy/drone-ssh # SSH工具镜像
@@ -31,12 +28,14 @@ steps:
       port: 22 # 远程连接端口
       command_timeout: 5m # 远程执行命令超时时间
       script:
-        - cd /root/opt/module/project/test # 进入宿主机构建目录
-        - chmod +x run.sh # 更改为可执行脚本
-        - ./run.sh # 运行脚本打包应用镜像并运行
+        - echo "hello"
+        - echo "$a"
+#        - cd /root/opt/module/project/test # 进入宿主机构建目录
+#        - chmod +x run.sh # 更改为可执行脚本
+#        - ./run.sh # 运行脚本打包应用镜像并运行
     when:
       event:
-        - web-status
+        - promote
 
 volumes: # 定义流水线挂载目录，用于共享数据
   - name: maven-build
@@ -49,22 +48,3 @@ volumes: # 定义流水线挂载目录，用于共享数据
     host:
       path: /opt/module/maven/apache-maven-3.8.5/conf
 
----
-kind: pipeline
-type: ssh
-name: default
-
-server:
-  host: 192.168.56.10
-  user: root
-  password:
-    from_secret: ssh_key
-
-steps:
-  - name: greeting
-    commands:
-      - echo hello world
-      - echo "$a"
-    when:
-      event:
-        - promote
