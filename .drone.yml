@@ -18,10 +18,7 @@ steps:
       - cp -r $PWD/**/**/*.jar /app/build
       - cp -r $PWD/**/Dockerfile_* /app/build
       - cp run.sh /app/build/run.sh
-    when:
-      event:
-        exclude:
-          - promote # 当代码push 时触发
+
 
   - name: ssh到主机然后打包镜像
     image: appleboy/drone-ssh # SSH工具镜像
