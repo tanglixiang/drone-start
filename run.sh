@@ -17,8 +17,8 @@ echo '----rm image----'
 # 打包编译docker镜像
 docker build -t ${group_name}/${app_name}:${app_version} -f Dockerfile_${app_name} .
 echo '----build image----'
-docker run -p 8080:8080 --name ${app_name} \
--e TZ="Asia/Shanghai" \
--v /etc/localtime:/etc/localtime \
--d ${group_name}/${app_name}:${app_version}
+docker run -p $2:$2 --name ${app_name} \
+  -e TZ="Asia/Shanghai" \
+  -v /etc/localtime:/etc/localtime \
+  -d ${group_name}/${app_name}:${app_version}
 echo '----start container----'

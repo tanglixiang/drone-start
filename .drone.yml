@@ -18,6 +18,9 @@ steps:
       - cp -r $PWD/**/**/*.jar /app/build
       - cp -r $PWD/**/Dockerfile_* /app/build
       - cp run.sh /app/build/run.sh
+    when:
+      event:
+        - push # 当代码push 时触发
 
   - name: ssh到主机然后打包镜像
     image: appleboy/drone-ssh # SSH工具镜像
@@ -31,12 +34,31 @@ steps:
       script:
         - cd /root/opt/module/project/test # 进入宿主机构建目录
         - chmod +x run.sh # 更改为可执行脚本
-        - ./run.sh "web-start" # 运行脚本打包应用镜像并运行
+        - ./run.sh "web-start" 8080 # 运行脚本打包应用镜像并运行
     when:
       event:
         - promote
       target:
         - web-start
+
+  - name: ssh到主机然后打包镜像
+    image: appleboy/drone-ssh # SSH工具镜像
+    settings:
+      host: 192.168.56.10 # 远程连接地址
+      username: root # 远程连接账号
+      password:
+        from_secret: ssh_key # 从Secret中读取SSH密码
+      port: 22 # 远程连接端口
+      command_timeout: 5m # 远程执行命令超时时间
+      script:
+        - cd /root/opt/module/project/test # 进入宿主机构建目录
+        - chmod +x run.sh # 更改为可执行脚本
+        - ./run.sh "web2-start" 8081 # 运行脚本打包应用镜像并运行 并设置端口
+    when:
+      event:
+        - promote
+      target:
+        - web2-start # 判断promote 的 Target 参数 ， 只有当相同时触发
 
 
 volumes: # 定义流水线挂载目录，用于共享数据

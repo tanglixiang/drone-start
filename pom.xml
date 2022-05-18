@@ -5,6 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>web-start</module>
+        <module>web2-start</module>
     </modules>
 
     <parent>

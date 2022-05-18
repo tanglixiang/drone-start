@@ -1,0 +1,5 @@
+# 基础镜像使用java
+FROM openjdk:8-jdk-alpine
+ADD web2-start-1.0-SNAPSHOT.jar web2-start-1.0-SNAPSHOT.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","web2-start-1.0-SNAPSHOT.jar"]
