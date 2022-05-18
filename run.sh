@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # 定义应用组名
-group_name='$1'
+group_name='$0'
 # 定义应用名称
-app_name='$1'
+app_name='$0'
 # 定义应用版本
 app_version='latest'
 # 定义应用环境
