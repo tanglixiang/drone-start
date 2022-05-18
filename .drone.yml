@@ -49,3 +49,19 @@ volumes: # 定义流水线挂载目录，用于共享数据
     host:
       path: /opt/module/maven/apache-maven-3.8.5/conf
 
+---
+kind: pipeline
+type: ssh
+name: default
+
+server:
+  host: 192.168.56.10
+  user: root
+  password:
+    from_secret: ssh_key
+
+steps:
+  - name: greeting
+    commands:
+      - echo hello world
+      - echo "$a"
