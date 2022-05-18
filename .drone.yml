@@ -34,13 +34,11 @@ steps:
 #        - cd /root/opt/module/project/test # 进入宿主机构建目录
 #        - chmod +x run.sh # 更改为可执行脚本
 #        - ./run.sh # 运行脚本打包应用镜像并运行
-#    when:
-#      event:
-#        - promote
-      trigger:
-        target:
-          include:
-            - test
+    when:
+      event:
+        - promote
+      target:
+        - test
 
 
 volumes: # 定义流水线挂载目录，用于共享数据
