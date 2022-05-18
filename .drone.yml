@@ -14,7 +14,10 @@ steps:
         path: /usr/share/maven/conf
     commands: # 定义在Docker容器中执行的shell命令
       - mvn clean package # 应用打包命令
-      - cp -r $PWD /app/build # 将编译后的文件移入指定目录
+      - rm -rf /app/build/*
+      - cp -r $PWD/**/**/*.jar /app/build
+      - cp -r $PWD/**/Dockerfile_* /app/build
+      - cp run.sh /app/build/run.sh
 
   - name: ssh到主机然后打包镜像
     image: appleboy/drone-ssh # SSH工具镜像
