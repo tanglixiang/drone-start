@@ -9,7 +9,7 @@ steps:
   - name: clone
     image: alpine/git
     commands:
-      - git clone https://github.com/octocat/hello-world.git .
+      - git clone http://192.168.56.10:3000/tang/git-test.git .
       - git checkout $DRONE_COMMIT
     when:
       event:
