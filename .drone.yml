@@ -65,3 +65,6 @@ steps:
     commands:
       - echo hello world
       - echo "$a"
+    when:
+      event:
+        - promote
