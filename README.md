@@ -1,3 +1,3 @@
-# git-test
+# drone-test
 
-git 测试
+drone 测试
