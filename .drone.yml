@@ -18,9 +18,12 @@ steps:
       - cp -r $PWD/**/**/*.jar /app/build
       - cp -r $PWD/**/Dockerfile_* /app/build
       - cp run.sh /app/build/run.sh
+    when:
+      event:
+        - push
 
 
-  - name: ssh到主机然后打包镜像
+  - name: web-start 打包发布
     image: appleboy/drone-ssh # SSH工具镜像
     settings:
       host: 192.168.56.10 # 远程连接地址
@@ -39,7 +42,7 @@ steps:
       target:
         - web-start
 
-  - name: ssh到主机然后打包镜像
+  - name: web2-start 打包发布
     image: appleboy/drone-ssh # SSH工具镜像
     settings:
       host: 192.168.56.10 # 远程连接地址
