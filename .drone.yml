@@ -17,6 +17,9 @@ steps:
       - cp target/turf-start-1.0-SNAPSHOT.jar /app/build/turf-start-1.0-SNAPSHOT.jar
       - cp Dockerfile /app/build/Dockerfile
       - cp run.sh /app/build/run.sh
+  when:
+    event:
+      - web-status
 
   - name: ssh到主机然后打包镜像
     image: appleboy/drone-ssh # SSH工具镜像
@@ -33,7 +36,7 @@ steps:
         - ./run.sh # 运行脚本打包应用镜像并运行
     when:
       event:
-        - promote
+        - web-status
 
 volumes: # 定义流水线挂载目录，用于共享数据
   - name: maven-build
