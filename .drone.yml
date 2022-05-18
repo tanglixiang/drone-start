@@ -2,7 +2,19 @@ kind: pipeline
 type: docker
 name: pipeline-example-maven
 
+clone:
+  disable: true # 禁用自带的clone
+
 steps:
+  - name: clone
+    image: alpine/git
+    commands:
+      - git clone https://github.com/octocat/hello-world.git .
+      - git checkout $DRONE_COMMIT
+    when:
+      event:
+        - push # 当代码 push 时才重新拉取
+
   - name: Maven编译
     image: maven:3.8-openjdk-8
     volumes: # 将容器内目录挂载到宿主机，仓库需要开启Trusted设置
@@ -20,7 +32,7 @@ steps:
       - cp run.sh /app/build/run.sh
     when:
       event:
-        - push
+        - push # 当代码 push 时才重新编译
 
 
   - name: web-start 打包发布
