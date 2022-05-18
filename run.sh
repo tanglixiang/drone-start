@@ -15,7 +15,7 @@ echo '----rm container----'
 docker rmi ${group_name}/${app_name}:${app_version}
 echo '----rm image----'
 # 打包编译docker镜像
-docker build -t ${group_name}/${app_name}:${app_version} .
+docker build -t ${group_name}/${app_name}:${app_version} -f /${app_name}/Dockerfile .
 echo '----build image----'
 docker run -p 8080:8080 --name ${app_name} \
 -e TZ="Asia/Shanghai" \
