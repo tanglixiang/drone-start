@@ -31,7 +31,7 @@ steps:
       script:
         - cd /root/opt/module/project/test # 进入宿主机构建目录
         - chmod +x run.sh # 更改为可执行脚本
-        - ./run.sh web-start # 运行脚本打包应用镜像并运行
+        - ./run.sh "web-start" # 运行脚本打包应用镜像并运行
     when:
       event:
         - promote
